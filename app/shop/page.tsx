@@ -147,9 +147,9 @@ export default function ShopPage() {
         </div>
       </section>
 
-      {/* 4. Product Grid (grid-cols-2 md:grid-cols-4 gap-8) */}
+      {/* 4. Product Grid (grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8) */}
       <section className="max-w-[1400px] mx-auto px-6 md:px-12 pb-24 md:pb-36">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {PRODUCTS.map((product, idx) => (
             <motion.div
               key={product.id}

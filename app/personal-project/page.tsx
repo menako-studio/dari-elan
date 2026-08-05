@@ -210,8 +210,8 @@ export default function PersonalProjectPage() {
       </section>
 
       {/* Experimental Free-Flowing Overlapping Masonry Collage */}
-      <section className="max-w-[1400px] mx-auto px-6 md:px-12 pb-32">
-        <div className="relative w-full min-h-[1400px] grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
+      <section className="max-w-[1400px] mx-auto px-6 md:px-12 pb-24 md:pb-32">
+        <div className="relative w-full min-h-auto md:min-h-[1400px] grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
           
           {/* Item 1 - Left Top (Col span 4) */}
           <motion.div
