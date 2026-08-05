@@ -27,12 +27,18 @@ export default function RootLayout({
             </Link>
 
             {/* Navigation Links in font-suisse */}
-            <nav className="flex items-center space-x-8 md:space-x-12">
+            <nav className="flex items-center space-x-6 md:space-x-10">
               <Link 
                 href="/" 
                 className="font-suisse text-[11px] uppercase tracking-[0.2em] text-[#111111] hover:text-neutral-500 transition-colors"
               >
                 Work
+              </Link>
+              <Link 
+                href="/personal-project" 
+                className="font-suisse text-[11px] uppercase tracking-[0.2em] text-[#111111] hover:text-neutral-500 transition-colors"
+              >
+                Personal Projects
               </Link>
               <Link 
                 href="/about" 
@@ -71,10 +77,13 @@ export default function RootLayout({
                     <Link href="/" className="hover:text-[#111111] transition-colors">Portfolio (01)</Link>
                   </li>
                   <li>
-                    <Link href="/about" className="hover:text-[#111111] transition-colors">Manifesto (02)</Link>
+                    <Link href="/personal-project" className="hover:text-[#111111] transition-colors">Personal Projects (02)</Link>
                   </li>
                   <li>
-                    <Link href="/shop" className="hover:text-[#111111] transition-colors">Print Archive (03)</Link>
+                    <Link href="/about" className="hover:text-[#111111] transition-colors">Manifesto (03)</Link>
+                  </li>
+                  <li>
+                    <Link href="/shop" className="hover:text-[#111111] transition-colors">Print Archive (04)</Link>
                   </li>
                 </ul>
               </div>
@@ -83,10 +92,13 @@ export default function RootLayout({
                 <p className="text-[#111111] font-medium mb-3">Connect</p>
                 <ul className="space-y-2">
                   <li>
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#111111] transition-colors">Instagram ↗</a>
+                    <a href="https://www.instagram.com/elanbudikusumah" target="_blank" rel="noopener noreferrer" className="hover:text-[#111111] transition-colors">Instagram ↗</a>
                   </li>
                   <li>
-                    <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#111111] transition-colors">Unsplash Pro ↗</a>
+                    <a href="https://www.behance.net/elanobrokoli" target="_blank" rel="noopener noreferrer" className="hover:text-[#111111] transition-colors">Behance ↗</a>
+                  </li>
+                  <li>
+                    <a href="https://www.linkedin.com/in/elan-budikusumah-764072140/" target="_blank" rel="noopener noreferrer" className="hover:text-[#111111] transition-colors">LinkedIn ↗</a>
                   </li>
                   <li>
                     <a href="mailto:elan@darielan.com" className="hover:text-[#111111] transition-colors">elan@darielan.com</a>
@@ -97,7 +109,7 @@ export default function RootLayout({
               <div>
                 <p className="text-[#111111] font-medium mb-3">Philosophy</p>
                 <p className="normal-case font-times text-xs text-neutral-500 leading-relaxed italic">
-                  "Photography is therapy — translating unspoken emotions into light and shadow."
+                  "Photography is not just about framing; it is about learning about life, therapy, and translating emotions into light and shadow."
                 </p>
               </div>
             </div>
