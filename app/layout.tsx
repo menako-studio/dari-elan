@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Navigation from "@/components/Navigation";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,46 +16,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-[#F9F9F8] text-[#111111] antialiased">
       <body className="min-h-screen flex flex-col justify-between bg-[#F9F9F8] text-[#111111] font-times selection:bg-neutral-200">
-        {/* Navigation Header */}
-        <header className="sticky top-0 z-50 bg-[#F9F9F8]/90 backdrop-blur-md border-b-[0.5px] border-neutral-300 transition-colors">
-          <div className="max-w-[1400px] mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
-            {/* Brand Logo in font-poynter ONLY */}
-            <Link 
-              href="/" 
-              className="font-poynter text-2xl md:text-3xl tracking-tight hover:opacity-75 transition-opacity"
-            >
-              DARIELAN
-            </Link>
-
-            {/* Navigation Links in font-suisse */}
-            <nav className="flex items-center space-x-6 md:space-x-10">
-              <Link 
-                href="/" 
-                className="font-suisse text-[11px] uppercase tracking-[0.2em] text-[#111111] hover:text-neutral-500 transition-colors"
-              >
-                Work
-              </Link>
-              <Link 
-                href="/personal-project" 
-                className="font-suisse text-[11px] uppercase tracking-[0.2em] text-[#111111] hover:text-neutral-500 transition-colors"
-              >
-                Personal Projects
-              </Link>
-              <Link 
-                href="/about" 
-                className="font-suisse text-[11px] uppercase tracking-[0.2em] text-[#111111] hover:text-neutral-500 transition-colors"
-              >
-                About
-              </Link>
-              <Link 
-                href="/shop" 
-                className="font-suisse text-[11px] uppercase tracking-[0.2em] text-[#111111] hover:text-neutral-500 transition-colors"
-              >
-                Archive & Shop
-              </Link>
-            </nav>
-          </div>
-        </header>
+        {/* Responsive Navigation Header */}
+        <Navigation />
 
         {/* Main Content Page Body */}
         <main className="flex-grow">{children}</main>
