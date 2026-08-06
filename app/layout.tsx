@@ -2,11 +2,35 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
 import AmbientAudioPlayer from "@/components/AmbientAudioPlayer";
+import { generatePersonJsonLd } from "@/lib/json-ld";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "DARIELAN — Elan Budikusumah Photography",
   description: "Photography as therapy. Translating emotions into light and shadow in Bali, Indonesia.",
+  metadataBase: new URL("https://darielan.com"),
+  openGraph: {
+    title: "DARIELAN — Elan Budikusumah Photography",
+    description: "Photography as therapy. Translating emotions into light and shadow in Bali, Indonesia.",
+    url: "https://darielan.com",
+    siteName: "DARIELAN",
+    images: [
+      {
+        url: "/api/og?title=SELECTED%20WORKS%20(2012-2026)&category=FINE%20ART%20%26%20COMMERCIAL",
+        width: 1200,
+        height: 630,
+        alt: "DARIELAN — Elan Budikusumah Portfolio",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "DARIELAN — Elan Budikusumah Photography",
+    description: "Photography as therapy. Translating emotions into light and shadow in Bali, Indonesia.",
+    images: ["/api/og?title=SELECTED%20WORKS%20(2012-2026)&category=FINE%20ART%20%26%20COMMERCIAL"],
+  },
 };
 
 export default function RootLayout({
@@ -14,8 +38,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const personJsonLd = generatePersonJsonLd();
+
   return (
     <html lang="en" className="bg-[#F9F9F8] text-[#111111] antialiased">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+      </head>
       <body suppressHydrationWarning={true} className="min-h-screen flex flex-col justify-between bg-[#F9F9F8] text-[#111111] font-times selection:bg-neutral-200">
         {/* Responsive Navigation Header */}
         <Navigation />
