@@ -10,7 +10,7 @@ This project serves as a digital photo exhibition gallery and manifesto, inspire
 - **Styling:** Tailwind CSS v4 (`@tailwindcss/postcss`)
 - **Animations:** Framer Motion (organic `[0.16, 1, 0.3, 1]` ease curves)
 - **Image Performance:** Next.js `<Image>` optimization (`next/image`) with WebP/AVIF output, `priority` preloading for hero LCP elements, and responsive `sizes` definitions.
-- **Atmosphere:** Web Audio API generative ambient soundscape
+- **Atmosphere:** HTML5 Audio modern CarPlay styled ambient soundscape
 - **Analytics:** Vercel Analytics & SpeedInsights
 
 ## Core Features
