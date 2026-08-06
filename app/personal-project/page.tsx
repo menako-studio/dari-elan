@@ -370,9 +370,6 @@ export default function PersonalProjectPage() {
 
       {/* Intimate Close-up Viewing Modal */}
       <PhotoModal photo={selectedPhoto} onClose={() => setSelectedPhoto(null)} />
-
-      {/* Ambient Audio Player Toggle */}
-      <AmbientAudioPlayer />
     </div>
   );
 }

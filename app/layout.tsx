@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
+import AmbientAudioPlayer from "@/components/AmbientAudioPlayer";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -21,6 +22,9 @@ export default function RootLayout({
 
         {/* Main Content Page Body */}
         <main className="flex-grow">{children}</main>
+
+        {/* Global Ambient iPod Player */}
+        <AmbientAudioPlayer />
 
         {/* Global Footer in font-unica ONLY */}
         <footer className="border-t-[0.5px] border-neutral-300 bg-[#F9F9F8] py-16 md:py-24 font-unica text-[11px] tracking-wider text-neutral-600 uppercase">
@@ -79,7 +83,6 @@ export default function RootLayout({
 
             <div className="pt-8 flex flex-col md:flex-row justify-between items-start md:items-center text-neutral-400 gap-4">
               <p>© {new Date().getFullYear()} DARIELAN — ELAN BUDIKUSUMAH. ALL RIGHTS RESERVED.</p>
-              
             </div>
           </div>
         </footer>
@@ -87,3 +90,4 @@ export default function RootLayout({
     </html>
   );
 }
+
