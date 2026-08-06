@@ -296,10 +296,10 @@ export default function CommercialPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
-              className="relative w-full max-w-4xl bg-[#F9F9F8] border-[0.5px] border-neutral-300 p-6 md:p-10 max-h-[90vh] overflow-y-auto"
+              className="relative w-full md:w-[95vw] md:h-[95vh] bg-[#F9F9F8] border-[0.5px] border-neutral-300 p-4 md:p-6 flex flex-col max-h-[100vh] overflow-y-auto md:overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex justify-between items-center pb-4 mb-6 border-b-[0.5px] border-neutral-300 font-suisse text-xs uppercase tracking-[0.2em]">
+              <div className="flex justify-between items-center pb-3 mb-4 border-b-[0.5px] border-neutral-300 font-suisse text-xs uppercase tracking-[0.2em] shrink-0">
                 <span className="text-neutral-500">{selectedProject.category}</span>
                 <button
                   onClick={() => setSelectedProject(null)}
@@ -309,47 +309,50 @@ export default function CommercialPage() {
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-                <div className="md:col-span-6 aspect-[4/5] relative overflow-hidden bg-neutral-200 border-[0.5px] border-neutral-300">
+              <div className="flex flex-col md:flex-row gap-6 md:gap-8 flex-grow md:overflow-hidden">
+                {/* Image Section - Main Dish */}
+                <div className="w-full md:w-3/4 lg:w-4/5 relative bg-neutral-100 border-[0.5px] border-neutral-200 min-h-[60vh] md:min-h-0 md:h-full">
                   <Image
                     src={selectedProject.image}
                     alt={selectedProject.title}
                     fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 80vw"
+                    className="object-contain"
                   />
                 </div>
-                <div className="md:col-span-6 flex flex-col justify-between space-y-6">
+                
+                {/* Text Section - Sidebar */}
+                <div className="w-full md:w-1/4 lg:w-1/5 flex flex-col justify-between space-y-6 md:overflow-y-auto pb-6 md:pb-0 pr-2 custom-scrollbar">
                   <div>
                     <span className="font-suisse text-[10px] uppercase tracking-[0.25em] text-neutral-400 block mb-2">
                       CLIENT: {selectedProject.client} — {selectedProject.year}
                     </span>
-                    <h3 className="font-suisse text-3xl md:text-4xl tracking-tight text-[#111111] mb-6">
+                    <h3 className="font-suisse text-2xl md:text-3xl tracking-tight text-[#111111] mb-4">
                       {selectedProject.title}
                     </h3>
-                    <div className="space-y-4 font-times text-neutral-700 text-sm md:text-base leading-relaxed whitespace-pre-line">
+                    <div className="space-y-4 font-times text-neutral-700 text-sm leading-relaxed whitespace-pre-line">
                       {selectedProject.description}
                     </div>
                   </div>
 
                   {selectedProject.specs && (
-                    <div className="pt-6 border-t-[0.5px] border-neutral-300 font-unica text-[11px] text-neutral-500 space-y-2 uppercase tracking-wider">
+                    <div className="pt-4 mt-8 border-t-[0.5px] border-neutral-300 font-unica text-[10px] text-neutral-500 space-y-2 uppercase tracking-wider shrink-0">
                       {selectedProject.specs.location && (
-                        <div className="flex justify-between">
-                          <span>LOCATION:</span>
-                          <span className="text-[#111111]">{selectedProject.specs.location}</span>
+                        <div className="flex justify-between gap-4">
+                          <span className="shrink-0">LOCATION:</span>
+                          <span className="text-[#111111] text-right">{selectedProject.specs.location}</span>
                         </div>
                       )}
                       {selectedProject.specs.camera && (
-                        <div className="flex justify-between">
-                          <span>GEAR / EMULSION:</span>
-                          <span className="text-[#111111]">{selectedProject.specs.camera}</span>
+                        <div className="flex justify-between gap-4">
+                          <span className="shrink-0">GEAR / EMULSION:</span>
+                          <span className="text-[#111111] text-right">{selectedProject.specs.camera}</span>
                         </div>
                       )}
                       {selectedProject.specs.role && (
-                        <div className="flex justify-between">
-                          <span>ROLE:</span>
-                          <span className="text-[#111111]">{selectedProject.specs.role}</span>
+                        <div className="flex justify-between gap-4">
+                          <span className="shrink-0">ROLE:</span>
+                          <span className="text-[#111111] text-right">{selectedProject.specs.role}</span>
                         </div>
                       )}
                     </div>

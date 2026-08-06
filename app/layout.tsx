@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-[#F9F9F8] text-[#111111] antialiased">
-      <body className="min-h-screen flex flex-col justify-between bg-[#F9F9F8] text-[#111111] font-times selection:bg-neutral-200">
+      <body suppressHydrationWarning={true} className="min-h-screen flex flex-col justify-between bg-[#F9F9F8] text-[#111111] font-times selection:bg-neutral-200">
         {/* Responsive Navigation Header */}
         <Navigation />
 
