@@ -1,12 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-50px" },
-  transition: { duration: 0.8, ease: "easeOut" },
+  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
 } as const;
 
 export default function AboutPage() {
@@ -27,17 +28,20 @@ export default function AboutPage() {
         <motion.div
           initial={{ opacity: 0, scale: 1.02 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           className="w-full aspect-[21/9] min-h-[380px] relative"
         >
-          <img
-            src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2400&q=90"
-            alt="Bali landscape by Elan Budikusumah"
-            className="w-full h-full object-cover object-center grayscale opacity-80"
+          <Image
+            src="/images/slowly.jpg"
+            alt="Slowly by Elan Budikusumah"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent flex items-end p-8 md:p-16">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent flex items-end p-8 md:p-16 z-10">
             <span className="font-suisse text-[10px] uppercase tracking-[0.3em] text-white/80">
-              BALI, INDONESIA — 2026
+              BANDUNG, INDONESIA — 2024
             </span>
           </div>
         </motion.div>
@@ -94,7 +98,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="pt-6 border-t-[0.5px] border-neutral-300"
           >
             <span className="font-suisse text-[10px] uppercase tracking-[0.2em] text-neutral-400 block mb-4">
@@ -113,7 +117,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="pt-6 border-t-[0.5px] border-neutral-300"
           >
             <span className="font-suisse text-[10px] uppercase tracking-[0.2em] text-neutral-400 block mb-4">
@@ -140,10 +144,12 @@ export default function AboutPage() {
             <div className="w-full aspect-[4/3] bg-neutral-200 p-8 md:p-12 relative overflow-hidden border-[0.5px] border-neutral-300">
               <div className="absolute inset-0 bg-[#EFECE6] opacity-90" />
               <div className="relative z-10 w-4/5 aspect-[3/4] ml-auto overflow-hidden border-[0.5px] border-neutral-300 bg-neutral-800">
-                <img
-                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1200&q=85"
+                <Image
+                  src="/images/elan.jpeg"
                   alt="Elan Budikusumah portrait"
-                  className="w-full h-full object-cover grayscale"
+                  fill
+                  sizes="(max-width: 768px) 80vw, 40vw"
+                  className="object-cover"
                 />
               </div>
             </div>
@@ -154,7 +160,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="md:col-span-5 flex flex-col justify-center"
           >
             <span className="font-suisse text-[10px] uppercase tracking-[0.3em] text-neutral-400 block mb-3">

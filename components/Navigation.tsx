@@ -24,10 +24,10 @@ export default function Navigation() {
         {/* Desktop Navigation Links in font-suisse */}
         <nav className="hidden md:flex items-center space-x-10">
           <Link 
-            href="/" 
+            href="/commercial" 
             className="font-suisse text-[11px] uppercase tracking-[0.2em] text-[#111111] hover:text-neutral-500 transition-colors"
           >
-            Work
+            Commercial
           </Link>
           <Link 
             href="/personal-project" 
@@ -71,11 +71,11 @@ export default function Navigation() {
           >
             <div className="px-6 py-6 flex flex-col space-y-5 font-suisse text-xs uppercase tracking-[0.2em]">
               <Link 
-                href="/" 
+                href="/commercial" 
                 onClick={closeMenu}
                 className="py-2 border-b-[0.5px] border-neutral-200 text-[#111111] hover:text-neutral-500 transition-colors flex justify-between"
               >
-                <span>Work</span>
+                <span>Commercial</span>
                 <span className="text-neutral-400">01</span>
               </Link>
               <Link 

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const PRODUCTS = [
   {
@@ -84,8 +85,8 @@ export default function ShopPage() {
         <motion.h1
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="font-suisse text-3xl sm:text-5xl md:text-6xl tracking-tight text-[#111111] uppercase"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="font-suisse text-3xl sm:text-5xl md:text-6xl tracking-tight text-[#111111] uppercase font-light"
         >
           THE PRINT & PRESET ARCHIVE
         </motion.h1>
@@ -104,13 +105,16 @@ export default function ShopPage() {
           className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center"
         >
           {/* Featured Image in Grey Box */}
-          <div className="md:col-span-7 bg-[#F0F0F0] p-8 md:p-12 aspect-[4/3] flex items-center justify-center relative">
-            <img
+          <div className="md:col-span-7 bg-[#F0F0F0] aspect-[4/3] relative flex items-center justify-center overflow-hidden">
+            <Image
               src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=85"
               alt="Bali Chiaroscuro Preset Pack Featured"
-              className="max-h-full max-w-full object-contain shadow-lg grayscale"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 58vw"
+              className="object-contain grayscale p-8"
             />
-            <span className="absolute top-4 left-4 font-suisse text-[9px] uppercase tracking-[0.25em] bg-[#111111] text-white px-3 py-1">
+            <span className="absolute top-4 left-4 font-suisse text-[9px] uppercase tracking-[0.25em] bg-[#111111] text-white px-3 py-1 z-10">
               FEATURED RELEASE
             </span>
           </div>
@@ -120,7 +124,7 @@ export default function ShopPage() {
             <span className="font-suisse text-[10px] uppercase tracking-[0.2em] text-neutral-500 mb-2">
               LIGHTROOM & CAPTURE ONE SUITE
             </span>
-            <h2 className="font-suisse text-3xl md:text-4xl tracking-tight text-[#111111] mb-4">
+            <h2 className="font-suisse text-3xl md:text-4xl tracking-tight text-[#111111] mb-4 font-light">
               Bali Chiaroscuro Preset Pack
             </h2>
             <p className="font-times text-neutral-600 text-base leading-relaxed mb-6">
@@ -147,7 +151,7 @@ export default function ShopPage() {
         </div>
       </section>
 
-      {/* 4. Product Grid (grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8) */}
+      {/* 4. Product Grid */}
       <section className="max-w-[1400px] mx-auto px-6 md:px-12 pb-24 md:pb-36">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {PRODUCTS.map((product, idx) => (
@@ -159,12 +163,14 @@ export default function ShopPage() {
               transition={{ duration: 0.7, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col group cursor-pointer"
             >
-              {/* Card Container: bg-[#F0F0F0] p-8 flex items-center justify-center aspect-[4/5] */}
-              <div className="bg-[#F0F0F0] p-8 flex items-center justify-center aspect-[4/5] overflow-hidden relative mb-4">
-                <img
+              {/* Card Container: bg-[#F0F0F0] aspect-[4/5] */}
+              <div className="bg-[#F0F0F0] relative aspect-[4/5] overflow-hidden mb-4">
+                <Image
                   src={product.image}
                   alt={product.title}
-                  className="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  className="object-contain p-6 transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
 

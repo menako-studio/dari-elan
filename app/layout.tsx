@@ -37,7 +37,7 @@ export default function RootLayout({
                 <p className="text-[#111111] font-medium mb-3">Navigation</p>
                 <ul className="space-y-2">
                   <li>
-                    <Link href="/" className="hover:text-[#111111] transition-colors">Portfolio (01)</Link>
+                    <Link href="/commercial" className="hover:text-[#111111] transition-colors">Commercial (01)</Link>
                   </li>
                   <li>
                     <Link href="/personal-project" className="hover:text-[#111111] transition-colors">Personal Projects (02)</Link>
@@ -79,7 +79,7 @@ export default function RootLayout({
 
             <div className="pt-8 flex flex-col md:flex-row justify-between items-start md:items-center text-neutral-400 gap-4">
               <p>© {new Date().getFullYear()} DARIELAN — ELAN BUDIKUSUMAH. ALL RIGHTS RESERVED.</p>
-              <p>DESIGNED & BUILT WITH EDITORIAL RIGOR</p>
+              
             </div>
           </div>
         </footer>

@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 export interface PhotoItem {
   id: string;
@@ -11,6 +12,7 @@ export interface PhotoItem {
   location: string;
   year: string;
   imageUrl: string;
+  images?: string[];
   aspectRatio: string;
   specs: {
     camera: string;
@@ -41,6 +43,11 @@ export default function PhotoModal({ photo, onClose }: PhotoModalProps) {
     };
   }, [photo, onClose]);
 
+  if (!photo) return null;
+
+  // Determine list of images for this article/project
+  const displayImages = photo.images && photo.images.length > 0 ? photo.images : [photo.imageUrl];
+
   return (
     <AnimatePresence>
       {photo && (
@@ -49,85 +56,93 @@ export default function PhotoModal({ photo, onClose }: PhotoModalProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 bg-[#F9F9F8]/95 backdrop-blur-lg"
+          className="fixed inset-0 z-50 overflow-y-auto bg-[#F9F9F8] text-[#111111] selection:bg-neutral-200"
           onClick={onClose}
         >
-          <motion.div
-            initial={{ opacity: 0, y: 15, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 15, scale: 0.98 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="relative w-full max-w-5xl bg-[#F9F9F8] border-[0.5px] border-neutral-300 p-6 md:p-10 max-h-[90vh] overflow-y-auto"
+          {/* Sticky Header Bar */}
+          <div 
+            className="sticky top-0 z-20 w-full px-6 md:px-12 py-4 bg-[#F9F9F8]/90 backdrop-blur-md border-b-[0.5px] border-neutral-300 flex justify-between items-center font-suisse text-xs uppercase tracking-[0.2em]"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header with index number and close button */}
-            <div className="flex justify-between items-center pb-4 mb-6 border-b-[0.5px] border-neutral-300 font-suisse text-xs uppercase tracking-[0.2em]">
-              <div className="flex items-center space-x-4 text-neutral-500">
-                <span>({photo.number})</span>
-                <span>/</span>
-                <span className="text-[#111111]">{photo.category}</span>
-              </div>
-              <button
-                onClick={onClose}
-                className="text-[#111111] hover:text-neutral-500 transition-colors uppercase tracking-[0.2em] px-2 py-1 border-[0.5px] border-neutral-300"
-              >
-                ✕ Close
-              </button>
+            <div className="flex items-center space-x-3 text-neutral-500">
+              <span className="text-[#111111] font-medium">({photo.number})</span>
+              <span>/</span>
+              <span>{photo.category}</span>
+              <span className="hidden sm:inline">•</span>
+              <span className="hidden sm:inline text-neutral-400">{photo.location} ({photo.year})</span>
             </div>
+            <button
+              onClick={onClose}
+              className="text-[#111111] hover:text-neutral-500 transition-colors uppercase tracking-[0.2em] px-3 py-1 border-[0.5px] border-neutral-400 bg-white/50"
+            >
+              ✕ Close
+            </button>
+          </div>
 
-            {/* Modal Body */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-              {/* Photo Display */}
-              <div className="md:col-span-7 w-full bg-neutral-100 overflow-hidden border-[0.5px] border-neutral-200">
-                <img
-                  src={photo.imageUrl}
-                  alt={photo.title}
-                  className="w-full h-auto object-contain max-h-[65vh]"
-                />
+          {/* Modal Inner Content Container */}
+          <div 
+            className="w-full min-h-screen py-10 md:py-16 px-4 md:px-8 max-w-[1700px] mx-auto flex flex-col items-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Kinfolk Editorial Prologue (Text Section First) */}
+            <header className="w-full max-w-3xl mx-auto text-center pt-4 pb-12 md:pb-16 border-b-[0.5px] border-neutral-300/60 mb-12 md:mb-16">
+              <div className="font-suisse text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-neutral-400 mb-4">
+                {photo.location} — {photo.year}
+              </div>
+              <h2 className="font-suisse text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-[#111111] mb-8 leading-[1.15]">
+                {photo.title}
+              </h2>
+              
+              {/* Prologue Description */}
+              <div className="font-times text-base sm:text-lg md:text-xl text-neutral-700 leading-relaxed max-w-2xl mx-auto text-center italic font-normal space-y-4">
+                {photo.description.split("\n\n").map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
               </div>
 
-              {/* Editorial Details Column */}
-              <div className="md:col-span-5 flex flex-col justify-between h-full space-y-6">
-                <div>
-                  <span className="font-suisse text-[10px] uppercase tracking-[0.3em] text-neutral-400 block mb-2">
-                    {photo.location} — {photo.year}
-                  </span>
-                  <h3 className="font-suisse text-2xl md:text-3xl tracking-tight text-[#111111] mb-4">
-                    {photo.title}
-                  </h3>
-                  <p className="font-times text-neutral-600 text-sm leading-relaxed mb-6">
-                    {photo.description}
-                  </p>
-                </div>
-
-                {/* Technical Camera Specifications */}
-                <div className="pt-6 border-t-[0.5px] border-neutral-300 font-unica text-[11px] text-neutral-500 space-y-2 uppercase tracking-wider">
-                  <div className="flex justify-between">
-                    <span className="text-neutral-400">CAMERA BODY:</span>
-                    <span className="text-[#111111]">{photo.specs.camera}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-neutral-400">OPTICAL LENS:</span>
-                    <span className="text-[#111111]">{photo.specs.lens}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-neutral-400">EMULSION / FILM:</span>
-                    <span className="text-[#111111]">{photo.specs.film}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-neutral-400">APERTURE:</span>
-                    <span className="text-[#111111]">{photo.specs.aperture}</span>
-                  </div>
-                </div>
-
-                {/* Direct Action */}
-                <div className="pt-4 flex justify-between items-center text-xs font-suisse tracking-widest text-neutral-400">
-                  <span>DARIELAN PERSONAL ARCHIVE</span>
-                  <span>BALI, ID</span>
-                </div>
+              {/* Technical Specifications Bar (Subtle EXIF Data) */}
+              <div className="mt-10 pt-6 border-t-[0.5px] border-neutral-300/40 font-unica text-[10px] md:text-[11px] text-neutral-400 uppercase tracking-widest flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+                <div><span className="text-neutral-300 me-1">CAM:</span> <span className="text-neutral-600 font-medium">{photo.specs.camera}</span></div>
+                <span>•</span>
+                <div><span className="text-neutral-300 me-1">LENS:</span> <span className="text-neutral-600 font-medium">{photo.specs.lens}</span></div>
+                <span>•</span>
+                <div><span className="text-neutral-300 me-1">FILM:</span> <span className="text-neutral-600 font-medium">{photo.specs.film}</span></div>
+                <span>•</span>
+                <div><span className="text-neutral-300 me-1">APERTURE:</span> <span className="text-neutral-600 font-medium">{photo.specs.aperture}</span></div>
               </div>
-            </div>
-          </motion.div>
+            </header>
+
+            {/* Main Dish: Exhibition Full-Size Image(s) Showcase */}
+            <main className="w-full flex flex-col items-center space-y-12 md:space-y-20 pb-20">
+              {displayImages.map((imgUrl, index) => (
+                <div 
+                  key={index}
+                  className="w-full max-w-[1600px] flex flex-col items-center"
+                >
+                  <div className="w-full aspect-[4/3] md:aspect-[16/10] relative bg-[#F2F2EF] border-[0.5px] border-neutral-300/50 shadow-sm overflow-hidden flex items-center justify-center min-h-[50vh] max-h-[85vh]">
+                    <Image
+                      src={imgUrl}
+                      alt={`${photo.title} — Frame ${index + 1}`}
+                      fill
+                      sizes="(max-width: 1600px) 100vw, 1600px"
+                      className="object-contain p-2 md:p-6"
+                    />
+                  </div>
+                  {displayImages.length > 1 && (
+                    <span className="mt-3 font-suisse text-[10px] uppercase tracking-[0.25em] text-neutral-400">
+                      FIG. {index + 1} — {photo.title}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </main>
+
+            {/* Footer Tag */}
+            <footer className="w-full max-w-3xl pt-8 border-t-[0.5px] border-neutral-300/60 flex justify-between items-center font-suisse text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-neutral-400">
+              <span>ELAN BUDIKUSUMAH PERSONAL ARCHIVE</span>
+              <span>EXHIBITION PRINT NO. {photo.number}</span>
+            </footer>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
