@@ -8,7 +8,7 @@
   - **Styling**: Tailwind CSS v4 (`@tailwindcss/postcss`) with strict design system enforcement
   - **Animations**: Framer Motion v13.0.0 (cubic-bezier `[0.16, 1, 0.3, 1]` ease curves for soft organic exhibition transitions)
   - **Image Optimization**: Next.js `<Image>` component (`next/image`) with `priority` on above-the-fold hero images to guarantee zero severe LCP performance issues.
-  - **Audio Engine**: Web Audio API Ambient Generator (generative warm analog soundscape)
+  - **Audio Engine**: HTML5 Audio Player (Modern CarPlay/iPhone 15 widget style with local .mp3 files)
   - **Analytics**: `@vercel/analytics`, `@vercel/speed-insights`
 
 ## 2. PROJECT STRUCTURE & ARCHITECTURE
@@ -26,7 +26,7 @@
   - `/components/`: Reusable UI components.
     - `Navigation.tsx`: Sticky responsive header navigation with brand logo in `font-poynter` and mobile drawer dropdown.
     - `PhotoModal.tsx`: Intimate exhibition viewing modal with EXIF camera specs and editorial prologue.
-    - `AmbientAudioPlayer.tsx`: Background Web Audio API drone player for gallery atmosphere.
+    - `AmbientAudioPlayer.tsx`: Modern CarPlay-style HTML5 audio player for gallery atmosphere (persists globally in layout).
   - `/public/images/`: Local photography assets (`Tisa-Granicia.jpg`, `Between-the-Takes.jpg`, `I-O-R.jpg`, `Lena-Beigel.jpg`, `Lena-Beigel-2.jpg`, `Just-Play.jpg`, `Silas-House.jpg`, `slowly.jpg`, `elan.jpeg`).
   - Root config files: `next.config.ts`, `tailwind.config.ts`, `tsconfig.json`.
 
@@ -38,7 +38,7 @@
   - **Commercial Page (`/commercial`)**: Detailed commercial portfolio showcase with modal overlay for storytelling.
   - **About Page (`/about`)**: Full-bleed hero image with gradient overlay, 3-column philosophy pillars, and portrait section with Instagram/Behance/LinkedIn links.
   - **Shop Page (`/shop`)**: Print and preset archive with featured product highlight block and responsive edition grid.
-  - **Ambient Sound Player**: Fixed audio toggle running real-time sine/triangle Web Audio API synthesizers.
+  - **Ambient Sound Player**: CarPlay/iPhone 15 styled widget running local .mp3 files with dynamic sizing and frosted glass.
 
 ## 4. REMAINING TASKS & TECHNICAL DEBT
 - **Pending Features**:
@@ -54,7 +54,7 @@
     - `font-suisse` for headings, category meta-tags, view toggles, buttons.
     - `font-times` for body text, excerpts, quotes, and prologues.
     - `font-unica` for footer copyright & technical specs ONLY.
-  - **Zero Border-Radius**: Absolute zero `border-radius` anywhere (`* { border-radius: 0 !important; }`).
+  - **Zero Border-Radius**: Absolute zero `border-radius` anywhere (`* { border-radius: 0 !important; }`), EXCEPT for specific modern components like the CarPlay styled `AmbientAudioPlayer`.
   - **Dividers**: Hairline borders only (`border-b-[0.5px] border-neutral-300`). No heavy drop shadows.
   - **Palette**: Background `bg-[#F9F9F8]`, text `text-[#111111]`, container backgrounds `bg-neutral-200` or `bg-[#F0F0F0]`.
   - **LCP & Image Rules**: ALWAYS use Next.js `<Image>` component (`next/image`) for image rendering. Always add `priority` to above-the-fold hero images and define explicit `sizes` attributes for responsive srcset generation.
