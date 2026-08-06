@@ -26,12 +26,16 @@ export interface PhotoItem {
 interface PhotoModalProps {
   photo: PhotoItem | null;
   onClose: () => void;
+  onNext?: () => void;
+  onPrev?: () => void;
 }
 
-export default function PhotoModal({ photo, onClose }: PhotoModalProps) {
+export default function PhotoModal({ photo, onClose, onNext, onPrev }: PhotoModalProps) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight" && onNext) onNext();
+      if (e.key === "ArrowLeft" && onPrev) onPrev();
     };
     if (photo) {
       document.body.style.overflow = "hidden";
@@ -41,7 +45,7 @@ export default function PhotoModal({ photo, onClose }: PhotoModalProps) {
       document.body.style.overflow = "auto";
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [photo, onClose]);
+  }, [photo, onClose, onNext, onPrev]);
 
   if (!photo) return null;
 
@@ -71,12 +75,33 @@ export default function PhotoModal({ photo, onClose }: PhotoModalProps) {
               <span className="hidden sm:inline">•</span>
               <span className="hidden sm:inline text-neutral-400">{photo.location} ({photo.year})</span>
             </div>
-            <button
-              onClick={onClose}
-              className="text-[#111111] hover:text-neutral-500 transition-colors uppercase tracking-[0.2em] px-3 py-1 border-[0.5px] border-neutral-400 bg-white/50"
-            >
-              ✕ Close
-            </button>
+            <div className="flex items-center space-x-2">
+              {onPrev && (
+                <button
+                  onClick={onPrev}
+                  title="Previous Photo (←)"
+                  className="text-[#111111] hover:text-neutral-500 transition-colors uppercase tracking-[0.15em] px-2.5 py-1 border-[0.5px] border-neutral-400 bg-white/50 text-[11px]"
+                >
+                  ← Prev
+                </button>
+              )}
+              {onNext && (
+                <button
+                  onClick={onNext}
+                  title="Next Photo (→)"
+                  className="text-[#111111] hover:text-neutral-500 transition-colors uppercase tracking-[0.15em] px-2.5 py-1 border-[0.5px] border-neutral-400 bg-white/50 text-[11px]"
+                >
+                  Next →
+                </button>
+              )}
+              <button
+                onClick={onClose}
+                title="Close Modal (Esc)"
+                className="text-[#111111] hover:text-neutral-500 transition-colors uppercase tracking-[0.15em] px-3 py-1 border-[0.5px] border-neutral-400 bg-white/50 text-[11px] ms-2"
+              >
+                ✕ Close
+              </button>
+            </div>
           </div>
 
           {/* Modal Inner Content Container */}

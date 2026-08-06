@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, Suspense } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import PhotoModal, { PhotoItem } from "@/components/PhotoModal";
@@ -115,18 +116,65 @@ const CATEGORIES = [
   "travel",
 ];
 
-export default function PersonalProjectPage() {
-  const [selectedPhoto, setSelectedPhoto] = useState<PhotoItem | null>(null);
-  const [activeCategory, setActiveCategory] = useState<string>("all");
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [gridCols, setGridCols] = useState<"dense" | "standard" | "large">("dense");
+function PersonalProjectGallery() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // Read URL query parameters
+  const activeCategory = searchParams.get("category") || "all";
+  const viewMode = (searchParams.get("view") as "grid" | "list") || "grid";
+  const gridCols = (searchParams.get("density") as "dense" | "standard" | "large") || "dense";
+  const activePhotoId = searchParams.get("photo");
+
   const [hoveredPhoto, setHoveredPhoto] = useState<PhotoItem | null>(null);
+
+  // Helper to update query string without page reload
+  const updateQuery = (params: Record<string, string | null>) => {
+    const current = new URLSearchParams(Array.from(searchParams.entries()));
+    Object.entries(params).forEach(([key, val]) => {
+      if (val === null || val === "all" || val === "grid" || val === "dense") {
+        current.delete(key);
+      } else {
+        current.set(key, val);
+      }
+    });
+    const search = current.toString();
+    const query = search ? `?${search}` : "";
+    router.replace(`${pathname}${query}`, { scroll: false });
+  };
+
+  // Derive selected photo from activePhotoId
+  const selectedPhoto = useMemo(() => {
+    if (!activePhotoId) return null;
+    return PERSONAL_PHOTOS.find((p) => p.id === activePhotoId) || null;
+  }, [activePhotoId]);
 
   // Filter photos based on active category
   const filteredPhotos = useMemo(() => {
     if (activeCategory === "all") return PERSONAL_PHOTOS;
     return PERSONAL_PHOTOS.filter((photo) => photo.category.toLowerCase() === activeCategory.toLowerCase());
   }, [activeCategory]);
+
+  // Next / Prev photo navigation logic
+  const selectedIndex = useMemo(() => {
+    if (!selectedPhoto) return -1;
+    return filteredPhotos.findIndex((p) => p.id === selectedPhoto.id);
+  }, [selectedPhoto, filteredPhotos]);
+
+  const handleNextPhoto = () => {
+    if (selectedIndex >= 0 && selectedIndex < filteredPhotos.length - 1) {
+      const nextPhoto = filteredPhotos[selectedIndex + 1];
+      updateQuery({ photo: nextPhoto.id });
+    }
+  };
+
+  const handlePrevPhoto = () => {
+    if (selectedIndex > 0) {
+      const prevPhoto = filteredPhotos[selectedIndex - 1];
+      updateQuery({ photo: prevPhoto.id });
+    }
+  };
 
   // Determine Tailwind grid column classes based on selected density
   const gridColsClass = useMemo(() => {
@@ -157,7 +205,7 @@ export default function PersonalProjectPage() {
             {/* View Mode Toggle: Grid • List */}
             <div className="flex items-center space-x-3 font-suisse text-[11px] tracking-[0.2em] uppercase">
               <button
-                onClick={() => setViewMode("grid")}
+                onClick={() => updateQuery({ view: "grid" })}
                 className={`transition-colors ${
                   viewMode === "grid"
                     ? "text-[#111111] font-medium underline underline-offset-4"
@@ -168,7 +216,7 @@ export default function PersonalProjectPage() {
               </button>
               <span className="text-neutral-300">•</span>
               <button
-                onClick={() => setViewMode("list")}
+                onClick={() => updateQuery({ view: "list" })}
                 className={`transition-colors ${
                   viewMode === "list"
                     ? "text-[#111111] font-medium underline underline-offset-4"
@@ -187,7 +235,7 @@ export default function PersonalProjectPage() {
               return (
                 <button
                   key={cat}
-                  onClick={() => setActiveCategory(cat)}
+                  onClick={() => updateQuery({ category: cat })}
                   className={`transition-all duration-200 py-1 ${
                     isActive
                       ? "text-[#111111] font-semibold border-b border-[#111111]"
@@ -219,7 +267,7 @@ export default function PersonalProjectPage() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: Math.min(index * 0.02, 0.3) }}
-                onClick={() => setSelectedPhoto(photo)}
+                onClick={() => updateQuery({ photo: photo.id })}
                 onMouseEnter={() => setHoveredPhoto(photo)}
                 onMouseLeave={() => setHoveredPhoto(null)}
                 className="group relative cursor-pointer overflow-hidden bg-neutral-200 border-[0.5px] border-neutral-300/40"
@@ -255,61 +303,28 @@ export default function PersonalProjectPage() {
           </motion.div>
         )}
 
-        {/* LIST VIEW — Hideaki Hamada Minimal Table Archive */}
+        {/* LIST VIEW — Clean Archival List with Hover Preview */}
         {viewMode === "list" && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4 }}
-            className="w-full overflow-x-auto"
-          >
-            <table className="w-full text-left font-suisse text-xs uppercase tracking-[0.15em] border-collapse">
-              <thead>
-                <tr className="border-b border-neutral-300 text-neutral-400 text-[10px] pb-3">
-                  <th className="py-3 px-2 font-normal w-12">NO.</th>
-                  <th className="py-3 px-4 font-normal">TITLE</th>
-                  <th className="py-3 px-4 font-normal">CATEGORY</th>
-                  <th className="py-3 px-4 font-normal">LOCATION</th>
-                  <th className="py-3 px-4 font-normal">YEAR</th>
-                  <th className="py-3 px-4 font-normal hidden md:table-cell">CAMERA / FILM</th>
-                  <th className="py-3 px-2 font-normal text-right">ACTION</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-neutral-200">
-                {filteredPhotos.map((photo) => (
-                  <tr
-                    key={photo.id}
-                    onClick={() => setSelectedPhoto(photo)}
-                    onMouseEnter={() => setHoveredPhoto(photo)}
-                    onMouseLeave={() => setHoveredPhoto(null)}
-                    className="group cursor-pointer hover:bg-neutral-100 transition-colors"
-                  >
-                    <td className="py-4 px-2 text-neutral-400 font-mono text-[11px]">
-                      {photo.number}
-                    </td>
-                    <td className="py-4 px-4 font-medium text-[#111111] group-hover:translate-x-1 transition-transform">
-                      {photo.title}
-                    </td>
-                    <td className="py-4 px-4 text-neutral-500">
-                      {photo.category}
-                    </td>
-                    <td className="py-4 px-4 text-neutral-500">
-                      {photo.location}
-                    </td>
-                    <td className="py-4 px-4 text-neutral-400 font-mono text-[11px]">
-                      {photo.year}
-                    </td>
-                    <td className="py-4 px-4 text-neutral-400 text-[10px] hidden md:table-cell">
-                      {photo.specs.camera} — {photo.specs.film}
-                    </td>
-                    <td className="py-4 px-2 text-right text-neutral-400 group-hover:text-[#111111]">
-                      VIEW ↗
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </motion.div>
+          <div className="w-full flex flex-col divide-y-[0.5px] divide-neutral-300/60 border-t-[0.5px] border-b-[0.5px] border-neutral-300/60">
+            {filteredPhotos.map((photo) => (
+              <div
+                key={photo.id}
+                onClick={() => updateQuery({ photo: photo.id })}
+                onMouseEnter={() => setHoveredPhoto(photo)}
+                onMouseLeave={() => setHoveredPhoto(null)}
+                className="group py-4 px-2 flex justify-between items-center cursor-pointer hover:bg-neutral-100/80 transition-colors font-suisse text-xs uppercase tracking-[0.15em]"
+              >
+                <div className="flex items-center space-x-4">
+                  <span className="text-neutral-400 font-mono text-[10px]">({photo.number})</span>
+                  <span className="text-[#111111] group-hover:underline underline-offset-4 font-medium">{photo.title}</span>
+                </div>
+                <div className="flex items-center space-x-6 text-neutral-500 text-[10px]">
+                  <span className="hidden sm:inline">{photo.category}</span>
+                  <span>{photo.year}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         )}
 
         {/* Empty State if filter returns no items */}
@@ -320,23 +335,22 @@ export default function PersonalProjectPage() {
         )}
       </main>
 
-      {/* Floating Image Preview Popup for List View Hover */}
+      {/* Floating Hover Preview Box */}
       <AnimatePresence>
-        {viewMode === "list" && hoveredPhoto && (
+        {hoveredPhoto && (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.15 }}
             className="fixed bottom-12 right-12 z-40 hidden lg:block pointer-events-none"
           >
-            <div className="w-56 bg-white p-2 border-[0.5px] border-neutral-300 shadow-xl">
-              <div className="w-full aspect-[4/3] relative bg-neutral-200 overflow-hidden">
+            <div className="bg-[#F9F9F8] p-2 border-[0.5px] border-neutral-400 shadow-xl max-w-[220px]">
+              <div className="relative w-48 h-64 bg-neutral-200">
                 <Image
                   src={hoveredPhoto.imageUrl}
                   alt={hoveredPhoto.title}
                   fill
-                  sizes="224px"
+                  sizes="220px"
                   className="object-cover"
                 />
               </div>
@@ -369,8 +383,20 @@ export default function PersonalProjectPage() {
       </footer>
 
       {/* Intimate Close-up Viewing Modal */}
-      <PhotoModal photo={selectedPhoto} onClose={() => setSelectedPhoto(null)} />
+      <PhotoModal
+        photo={selectedPhoto}
+        onClose={() => updateQuery({ photo: null })}
+        onNext={selectedIndex < filteredPhotos.length - 1 ? handleNextPhoto : undefined}
+        onPrev={selectedIndex > 0 ? handlePrevPhoto : undefined}
+      />
     </div>
   );
 }
 
+export default function PersonalProjectPage() {
+  return (
+    <Suspense fallback={<div className="w-full min-h-screen bg-[#F9F9F8]" />}>
+      <PersonalProjectGallery />
+    </Suspense>
+  );
+}
