@@ -7,7 +7,7 @@ This project serves as a digital photo exhibition gallery and manifesto, inspire
 
 ## Tech Stack & Performance
 - **Framework:** Next.js 16 (App Router) with Turbopack
-- **CMS:** Sanity.io (Embedded Studio)
+- **CMS:** Sanity.io (Embedded Studio at `/studio` with global CSS styling and hydration error protection)
 - **Styling:** Tailwind CSS v4 (`@tailwindcss/postcss`)
 - **Animations:** Framer Motion (organic `[0.16, 1, 0.3, 1]` ease curves)
 - **Image Performance:** Next.js `<Image>` optimization (`next/image`) with WebP/AVIF output, `priority` preloading for hero LCP elements, and responsive `sizes` definitions.
@@ -16,6 +16,7 @@ This project serves as a digital photo exhibition gallery and manifesto, inspire
 
 ## Core Features
 - **Hideaki Hamada Exhibition UX:** Minimal photobook archive with Grid/List view switching, category filters, camera EXIF metadata displays (camera, lens, film emulsion, aperture), and floating preview popups.
+- **Embedded Sanity Studio:** Fully customized embedded CMS at `/studio` inheriting global CSS styles and clean white background styling.
 - **Editorial Layouts:** Asymmetrical column structures and full-bleed image interruptions.
 - **Introspective Tone:** Copywriting and visual design centered around raw, unpolished, emotional storytelling ("Photography as therapy").
 - **Strict Design System:** Absolute zero `border-radius`, strict typography hierarchy (`font-poynter`, `font-suisse`, `font-times`, `font-unica`), and hairline dividers.
