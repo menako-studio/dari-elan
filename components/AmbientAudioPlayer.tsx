@@ -12,30 +12,6 @@ type Track = {
   albumArtBg: string;
 };
 
-const ABOUT_PLAYLIST: Track[] = [
-  { 
-    id: "classixx", 
-    title: "All You're Waiting For", 
-    artist: "Classixx", 
-    src: "/musics/classixx-all-youre-waiting-for.mp3",
-    albumArtBg: "from-blue-600 via-indigo-600 to-slate-900"
-  },
-  { 
-    id: "mimi1", 
-    title: "a new place", 
-    artist: "mimi bay", 
-    src: "/musics/mimi_bay_a_new_place.mp3",
-    albumArtBg: "from-amber-600 via-stone-700 to-stone-900"
-  },
-  { 
-    id: "mimi2", 
-    title: "columbia road", 
-    artist: "mimi bay", 
-    src: "/musics/mimi_bay_columbia_road.mp3",
-    albumArtBg: "from-emerald-700 via-teal-800 to-slate-950"
-  },
-];
-
 const PERSONAL_PROJECT_PLAYLIST: Track[] = [
   { 
     id: "mimi1", 
@@ -58,35 +34,13 @@ const PERSONAL_PROJECT_PLAYLIST: Track[] = [
     src: "/musics/mimi_bay_u_know_me_so_well.mp3",
     albumArtBg: "from-rose-700 via-pink-900 to-neutral-950"
   },
-  { 
-    id: "classixx", 
-    title: "All You're Waiting For", 
-    artist: "Classixx", 
-    src: "/musics/classixx-all-youre-waiting-for.mp3",
-    albumArtBg: "from-blue-600 via-indigo-600 to-slate-900"
-  },
-];
-
-const DEFAULT_PLAYLIST: Track[] = [
-  { 
-    id: "mimi1", 
-    title: "a new place", 
-    artist: "mimi bay", 
-    src: "/musics/mimi_bay_a_new_place.mp3",
-    albumArtBg: "from-amber-600 via-stone-700 to-stone-900"
-  },
 ];
 
 export default function AmbientAudioPlayer() {
   const pathname = usePathname();
-  
-  const getPlaylistForPath = useCallback((path: string) => {
-    if (path === "/about") return ABOUT_PLAYLIST;
-    if (path.startsWith("/personal-project")) return PERSONAL_PROJECT_PLAYLIST;
-    return DEFAULT_PLAYLIST;
-  }, []);
+  const isPersonalProjectPage = pathname.startsWith("/personal-project");
 
-  const [playlist, setPlaylist] = useState<Track[]>(() => getPlaylistForPath(pathname));
+  const [playlist] = useState<Track[]>(PERSONAL_PROJECT_PLAYLIST);
   const [trackIndex, setTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMinimized, setIsMinimized] = useState(true);
@@ -123,7 +77,7 @@ export default function AmbientAudioPlayer() {
     };
 
     audio.onended = () => {
-      setTrackIndex((prev) => (prev + 1) % playlist.length);
+      setTrackIndex((prev) => (prev + 1) % PERSONAL_PROJECT_PLAYLIST.length);
     };
 
     const playPromise = audio.play();
@@ -137,18 +91,26 @@ export default function AmbientAudioPlayer() {
           console.log("Autoplay waiting for click:", err);
         });
     }
-  }, [playlist.length]);
+  }, []);
 
-  // Handle route change
+  // Handle route change: play audio on /personal-project, stop on all other pages
   useEffect(() => {
-    const newPlaylist = getPlaylistForPath(pathname);
-    setPlaylist(newPlaylist);
+    if (!isPersonalProjectPage) {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+      setIsPlaying(false);
+      return;
+    }
+
     setTrackIndex(0);
-    playTrack(newPlaylist[0]);
-  }, [pathname, getPlaylistForPath, playTrack]);
+    playTrack(PERSONAL_PROJECT_PLAYLIST[0]);
+  }, [pathname, isPersonalProjectPage, playTrack]);
 
-  // Autoplay on first click if blocked initially
+  // Autoplay on first click if blocked initially (only active on /personal-project)
   useEffect(() => {
+    if (!isPersonalProjectPage) return;
+
     const handleFirstClick = () => {
       if (!hasUserInteracted.current) {
         hasUserInteracted.current = true;
@@ -159,7 +121,7 @@ export default function AmbientAudioPlayer() {
     };
     window.addEventListener("click", handleFirstClick, { once: true });
     return () => window.removeEventListener("click", handleFirstClick);
-  }, [isPlaying]);
+  }, [isPlaying, isPersonalProjectPage]);
 
   // Toggle Play / Pause
   const togglePlayPause = (e?: React.MouseEvent) => {
@@ -207,7 +169,7 @@ export default function AmbientAudioPlayer() {
     };
   }, []);
 
-  if (!pathname.startsWith("/personal-project")) {
+  if (!isPersonalProjectPage) {
     return null;
   }
 
