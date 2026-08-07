@@ -39,11 +39,12 @@
   - **About Page (`/about`)**: Full-bleed hero image with gradient overlay, 3-column philosophy pillars, and portrait section with Instagram/Behance/LinkedIn links.
   - **Shop Page (`/shop`)**: Print and preset archive with featured product highlight block and responsive edition grid.
   - **Ambient Sound Player**: CarPlay/iPhone 15 styled widget running local .mp3 files with dynamic sizing and frosted glass.
+  - **Headless CMS**: Integrated Sanity.io with Embedded Studio at `/studio` for managing products and projects.
 
 ## 4. REMAINING TASKS & TECHNICAL DEBT
 - **Pending Features**:
   - Functional cart and checkout system for `/shop`.
-  - CMS/Database integration for dynamic content management (e.g. Sanity, Strapi, or Supabase).
+  - Connect UI components in `/shop`, `/commercial`, and `/personal-project` to fetch actual data from Sanity instead of dummy data.
   - Web font optimization: Replace CSS font variables with custom webfont files in `public/fonts/` or Next.js `next/font/local`.
 
 ## 5. AI AGENT CODING GUIDELINES

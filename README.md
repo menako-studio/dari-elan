@@ -7,6 +7,7 @@ This project serves as a digital photo exhibition gallery and manifesto, inspire
 
 ## Tech Stack & Performance
 - **Framework:** Next.js 16 (App Router) with Turbopack
+- **CMS:** Sanity.io (Embedded Studio)
 - **Styling:** Tailwind CSS v4 (`@tailwindcss/postcss`)
 - **Animations:** Framer Motion (organic `[0.16, 1, 0.3, 1]` ease curves)
 - **Image Performance:** Next.js `<Image>` optimization (`next/image`) with WebP/AVIF output, `priority` preloading for hero LCP elements, and responsive `sizes` definitions.
