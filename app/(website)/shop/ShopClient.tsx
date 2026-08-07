@@ -9,15 +9,25 @@ import { urlForImage } from "@/sanity/lib/image";
 interface Product {
   _id: string;
   name: string;
+  title?: string;
   slug: string;
   category: string;
   price: number;
+  mainImage?: any;
   images: any[];
   description: string;
   features: string[];
   size?: string;
   stripePriceId?: string;
 }
+
+
+const getImageSrc = (img: any) => {
+  if (!img) return "";
+  if (typeof img === "string") return img;
+  const builderUrl = urlForImage(img)?.url();
+  return builderUrl || "";
+};
 
 export default function ShopClient({ products }: { products: Product[] }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -57,9 +67,9 @@ export default function ShopClient({ products }: { products: Product[] }) {
             className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center"
           >
             <div className="md:col-span-7 bg-[#F0F0F0] aspect-[4/3] relative flex items-center justify-center overflow-hidden">
-              {featuredProduct.images && featuredProduct.images.length > 0 && (
+              {((featuredProduct.images && featuredProduct.images.length > 0) || featuredProduct.mainImage) && (
                 <Image
-                  src={urlForImage(featuredProduct.images[0]).url()}
+                  src={getImageSrc(featuredProduct.images && featuredProduct.images.length > 0 ? featuredProduct.images[0] : featuredProduct.mainImage)}
                   alt={featuredProduct.name}
                   fill
                   priority
@@ -93,8 +103,8 @@ export default function ShopClient({ products }: { products: Product[] }) {
                     title: featuredProduct.name,
                     edition: featuredProduct.size || "Instant Download",
                     price: featuredProduct.price,
-                    imageUrl: featuredProduct.images && featuredProduct.images.length > 0 ? urlForImage(featuredProduct.images[0]).url() : "",
-                    type: featuredProduct.category.toLowerCase().includes("preset") ? "preset" : "print",
+                    imageUrl: getImageSrc(featuredProduct.images && featuredProduct.images.length > 0 ? featuredProduct.images[0] : featuredProduct.mainImage),
+                    type: featuredProduct.category?.toLowerCase().includes("preset") ? "preset" : "print",
                   });
                   setIsCartOpen(true);
                 }}
@@ -128,10 +138,10 @@ export default function ShopClient({ products }: { products: Product[] }) {
               className="flex flex-col group"
             >
               <div className="bg-[#F0F0F0] relative aspect-[4/5] overflow-hidden mb-4">
-                {product.images && product.images.length > 0 && (
+                {((product.images && product.images.length > 0) || product.mainImage) && (
                   <Image
-                    src={urlForImage(product.images[0]).url()}
-                    alt={product.name}
+                    src={getImageSrc(product.images && product.images.length > 0 ? product.images[0] : product.mainImage)}
+                    alt={product.name || product.title || "Product Image"}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="object-contain p-6 transition-transform duration-500 group-hover:scale-105"
@@ -145,7 +155,7 @@ export default function ShopClient({ products }: { products: Product[] }) {
                     {product.category}
                   </span>
                   <h3 className="font-suisse text-sm tracking-tight text-[#111111] group-hover:text-neutral-600 transition-colors">
-                    {product.name}
+                    {product.name || product.title}
                   </h3>
                 </div>
 
@@ -162,11 +172,11 @@ export default function ShopClient({ products }: { products: Product[] }) {
                     onClick={() => {
                       addToCart({
                         id: product._id,
-                        title: product.name,
+                        title: product.name || product.title || "",
                         edition: product.size || "Instant Download",
                         price: product.price,
-                        imageUrl: product.images && product.images.length > 0 ? urlForImage(product.images[0]).url() : "",
-                        type: product.category.toLowerCase().includes("preset") ? "preset" : "print",
+                        imageUrl: getImageSrc(product.images && product.images.length > 0 ? product.images[0] : product.mainImage),
+                        type: product.category?.toLowerCase().includes("preset") ? "preset" : "print",
                       });
                       setIsCartOpen(true);
                     }}

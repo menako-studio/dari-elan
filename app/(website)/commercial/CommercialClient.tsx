@@ -24,6 +24,13 @@ const fadeIn = {
   transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
 } as const;
 
+const getImageSrc = (img: any) => {
+  if (!img) return "";
+  if (typeof img === "string") return img;
+  const builderUrl = urlForImage(img)?.url();
+  return builderUrl || "";
+};
+
 export default function CommercialClient({ projects }: { projects: CommercialProject[] }) {
   const [selectedProject, setSelectedProject] = useState<CommercialProject | null>(null);
 
@@ -68,7 +75,7 @@ export default function CommercialClient({ projects }: { projects: CommercialPro
                 <div className="w-full aspect-[4/5] relative overflow-hidden bg-neutral-200 mb-6">
                   {featuredProject1.mainImage && (
                     <Image
-                      src={urlForImage(featuredProject1.mainImage).url()}
+                      src={getImageSrc(featuredProject1.mainImage)}
                       alt={featuredProject1.title}
                       fill
                       priority
@@ -106,7 +113,7 @@ export default function CommercialClient({ projects }: { projects: CommercialPro
                 <div className="w-full aspect-[4/5] relative overflow-hidden bg-neutral-200 mb-6">
                   {featuredProject2.mainImage && (
                     <Image
-                      src={urlForImage(featuredProject2.mainImage).url()}
+                      src={getImageSrc(featuredProject2.mainImage)}
                       alt={featuredProject2.title}
                       fill
                       priority
@@ -161,7 +168,7 @@ export default function CommercialClient({ projects }: { projects: CommercialPro
                 <div className="w-full aspect-[4/3] relative overflow-hidden bg-neutral-200 mb-6">
                   {project.mainImage && (
                     <Image
-                      src={urlForImage(project.mainImage).url()}
+                      src={getImageSrc(project.mainImage)}
                       alt={project.title}
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
@@ -218,7 +225,7 @@ export default function CommercialClient({ projects }: { projects: CommercialPro
                 <div className="w-full md:w-3/4 lg:w-4/5 relative bg-neutral-100 border-[0.5px] border-neutral-200 min-h-[60vh] md:min-h-0 md:h-full">
                   {selectedProject.mainImage && (
                     <Image
-                      src={urlForImage(selectedProject.mainImage).url()}
+                      src={getImageSrc(selectedProject.mainImage)}
                       alt={selectedProject.title}
                       fill
                       sizes="(max-width: 768px) 100vw, 80vw"
@@ -226,6 +233,7 @@ export default function CommercialClient({ projects }: { projects: CommercialPro
                     />
                   )}
                 </div>
+
                 
                 <div className="w-full md:w-1/4 lg:w-1/5 flex flex-col justify-between space-y-6 md:overflow-y-auto pb-6 md:pb-0 pr-2 custom-scrollbar">
                   <div>

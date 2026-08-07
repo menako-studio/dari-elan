@@ -31,6 +31,13 @@ const CATEGORIES = [
   "travel",
 ];
 
+const getImageSrc = (img: any) => {
+  if (!img) return "";
+  if (typeof img === "string") return img;
+  const builderUrl = urlForImage(img)?.url();
+  return builderUrl || "";
+};
+
 export default function PersonalProjectClient({ projects }: { projects: PersonalProject[] }) {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -177,7 +184,7 @@ export default function PersonalProjectClient({ projects }: { projects: Personal
                 <div className="w-full aspect-[4/3] sm:aspect-square relative overflow-hidden bg-neutral-200">
                   {photo.mainImage && (
                     <Image
-                      src={urlForImage(photo.mainImage).url()}
+                      src={getImageSrc(photo.mainImage)}
                       alt={photo.title}
                       fill
                       sizes="(max-width: 640px) 33vw, (max-width: 1024px) 20vw, 10vw"
@@ -246,7 +253,7 @@ export default function PersonalProjectClient({ projects }: { projects: Personal
             <div className="bg-[#F9F9F8] p-2 border-[0.5px] border-neutral-400 shadow-xl max-w-[220px]">
               <div className="relative w-48 h-64 bg-neutral-200">
                 <Image
-                  src={urlForImage(hoveredPhoto.mainImage).url()}
+                  src={getImageSrc(hoveredPhoto.mainImage)}
                   alt={hoveredPhoto.title}
                   fill
                   sizes="220px"
@@ -291,7 +298,7 @@ export default function PersonalProjectClient({ projects }: { projects: Personal
             category: selectedPhoto.projectType,
             location: "",
             year: selectedPhoto.date,
-            imageUrl: urlForImage(selectedPhoto.mainImage).url(),
+            imageUrl: getImageSrc(selectedPhoto.mainImage),
             aspectRatio: "aspect-[4/5]",
             specs: {
               camera: "Unknown",
