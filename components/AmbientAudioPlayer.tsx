@@ -69,13 +69,6 @@ const PERSONAL_PROJECT_PLAYLIST: Track[] = [
 
 const DEFAULT_PLAYLIST: Track[] = [
   { 
-    id: "classixx", 
-    title: "All You're Waiting For", 
-    artist: "Classixx", 
-    src: "/musics/classixx-all-youre-waiting-for.mp3",
-    albumArtBg: "from-blue-600 via-indigo-600 to-slate-900"
-  },
-  { 
     id: "mimi1", 
     title: "a new place", 
     artist: "mimi bay", 
@@ -213,6 +206,10 @@ export default function AmbientAudioPlayer() {
       }
     };
   }, []);
+
+  if (!pathname.startsWith("/personal-project")) {
+    return null;
+  }
 
   return (
     <div id="ambient-audio-player" className="fixed bottom-6 right-6 z-50 select-none">
