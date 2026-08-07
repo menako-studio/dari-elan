@@ -3,7 +3,7 @@ import Link from "next/link";
 import Navigation from "@/components/Navigation";
 import AmbientAudioPlayer from "@/components/AmbientAudioPlayer";
 import { generatePersonJsonLd } from "@/lib/json-ld";
-import "./globals.css";
+import "../globals.css";
 
 export const metadata: Metadata = {
   title: "DARIELAN — Elan Budikusumah Photography",
