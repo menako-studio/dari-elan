@@ -108,8 +108,8 @@ export default function PersonalProjectClient({ projects }: { projects: Personal
   }, [gridCols]);
 
   return (
-    <div className="w-full min-h-screen bg-[#F9F9F8] text-[#111111] selection:bg-neutral-200">
-      <header className="w-full pt-6 pb-4 px-6 md:px-12 bg-[#F9F9F8]">
+    <div className="w-full min-h-screen bg-[#FFFDF4] text-[#111111] selection:bg-[#D36F83] selection:text-white">
+      <header className="w-full pt-6 pb-4 px-6 md:px-12 bg-[#FFFDF4]">
         <div className="max-w-[1800px] mx-auto">
           <div className="flex justify-between items-center pb-4">
             <h1 className="font-suisse text-xs md:text-sm uppercase tracking-[0.25em] text-[#111111] font-medium">
@@ -250,8 +250,8 @@ export default function PersonalProjectClient({ projects }: { projects: Personal
             exit={{ opacity: 0, scale: 0.95 }}
             className="fixed bottom-12 right-12 z-40 hidden lg:block pointer-events-none"
           >
-            <div className="bg-[#F9F9F8] p-2 border-[0.5px] border-neutral-400 shadow-xl max-w-[220px]">
-              <div className="relative w-48 h-64 bg-neutral-200">
+            <div className="bg-[#FFFDF4] p-2 border-[0.5px] border-neutral-400 shadow-xl max-w-[220px]">
+              <div className="relative aspect-[3/4] w-full overflow-hidden mb-2">
                 <Image
                   src={getImageSrc(hoveredPhoto.mainImage)}
                   alt={hoveredPhoto.title}
@@ -260,16 +260,15 @@ export default function PersonalProjectClient({ projects }: { projects: Personal
                   className="object-cover"
                 />
               </div>
-              <div className="mt-2 font-suisse text-[10px] uppercase tracking-wider text-neutral-600 flex justify-between">
-                <span className="truncate">{hoveredPhoto.title}</span>
-                <span className="text-neutral-400 font-mono">(01)</span>
-              </div>
+              <p className="font-times text-xs italic text-[#111111]">{hoveredPhoto.title}</p>
+              <p className="font-suisse text-[9px] uppercase tracking-wider text-neutral-400">{hoveredPhoto.projectType || "Archival"}</p>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <footer className="w-full border-t-[0.5px] border-neutral-300 py-6 px-6 md:px-12 bg-[#F9F9F8]">
+      {/* Grid Bottom Info Bar */}
+      <footer className="w-full border-t-[0.5px] border-neutral-300 py-6 px-6 md:px-12 bg-[#FFFDF4]">
         <div className="max-w-[1800px] mx-auto flex flex-col sm:flex-row justify-between items-center font-suisse text-[10px] text-neutral-400 uppercase tracking-[0.2em] gap-4">
           <div>
             SHOWING {filteredPhotos.length} OF {projects.length} ARCHIVAL WORKS

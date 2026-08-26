@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import BrandLogo from "@/components/BrandLogo";
+import Brandmark from "@/components/Brandmark";
 
 export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -10,15 +12,16 @@ export default function Navigation() {
   const closeMenu = () => setMobileMenuOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-[#F9F9F8]/90 backdrop-blur-md border-b-[0.5px] border-neutral-300 transition-colors">
+    <header className="sticky top-0 z-50 bg-[#FFFDF4]/90 backdrop-blur-md border-b-[0.5px] border-neutral-300/80 transition-colors">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
-        {/* Brand Logo in font-poynter ONLY */}
+        {/* Brand Primary Wordmark strictly adhering to Brand Guideline (min height 25px) */}
         <Link 
           href="/" 
           onClick={closeMenu}
-          className="font-poynter text-2xl md:text-3xl tracking-tight hover:opacity-75 transition-opacity"
+          className="flex items-center group py-1"
+          aria-label="dari elan homepage"
         >
-          DARIELAN
+          <BrandLogo className="h-7 md:h-8 w-auto text-[#111111] group-hover:opacity-75 transition-opacity" />
         </Link>
 
         {/* Desktop Navigation Links in font-suisse */}
@@ -67,13 +70,13 @@ export default function Navigation() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden overflow-hidden border-b-[0.5px] border-neutral-300 bg-[#F9F9F8]"
+            className="md:hidden overflow-hidden border-b-[0.5px] border-neutral-300/80 bg-[#FFFDF4]"
           >
             <div className="px-6 py-6 flex flex-col space-y-5 font-suisse text-xs uppercase tracking-[0.2em]">
               <Link 
                 href="/commercial" 
                 onClick={closeMenu}
-                className="py-2 border-b-[0.5px] border-neutral-200 text-[#111111] hover:text-neutral-500 transition-colors flex justify-between"
+                className="py-2 border-b-[0.5px] border-neutral-200 text-[#111111] hover:text-neutral-500 transition-colors flex justify-between items-center"
               >
                 <span>Commercial</span>
                 <span className="text-neutral-400">01</span>
@@ -81,7 +84,7 @@ export default function Navigation() {
               <Link 
                 href="/personal-project" 
                 onClick={closeMenu}
-                className="py-2 border-b-[0.5px] border-neutral-200 text-[#111111] hover:text-neutral-500 transition-colors flex justify-between"
+                className="py-2 border-b-[0.5px] border-neutral-200 text-[#111111] hover:text-neutral-500 transition-colors flex justify-between items-center"
               >
                 <span>Personal Projects</span>
                 <span className="text-neutral-400">02</span>
@@ -89,7 +92,7 @@ export default function Navigation() {
               <Link 
                 href="/about" 
                 onClick={closeMenu}
-                className="py-2 border-b-[0.5px] border-neutral-200 text-[#111111] hover:text-neutral-500 transition-colors flex justify-between"
+                className="py-2 border-b-[0.5px] border-neutral-200 text-[#111111] hover:text-neutral-500 transition-colors flex justify-between items-center"
               >
                 <span>About</span>
                 <span className="text-neutral-400">03</span>
@@ -97,11 +100,17 @@ export default function Navigation() {
               <Link 
                 href="/shop" 
                 onClick={closeMenu}
-                className="py-2 text-[#111111] hover:text-neutral-500 transition-colors flex justify-between"
+                className="py-2 text-[#111111] hover:text-neutral-500 transition-colors flex justify-between items-center"
               >
                 <span>Archive & Shop</span>
                 <span className="text-neutral-400">04</span>
               </Link>
+              <div className="pt-4 border-t-[0.5px] border-neutral-200/80 flex items-center justify-between">
+                <span className="text-[10px] text-neutral-400 normal-case font-times italic">
+                  “to be the link between humans and memories.”
+                </span>
+                <Brandmark className="h-6 w-auto text-[#D36F83] opacity-80" />
+              </div>
             </div>
           </motion.nav>
         )}

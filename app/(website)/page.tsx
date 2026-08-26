@@ -13,7 +13,7 @@ const fadeInProps = {
 
 export default function LandingPage() {
   return (
-    <div className="w-full bg-[#F9F9F8] min-h-screen text-[#111111]">
+    <div className="w-full bg-[#FFFDF4] min-h-screen text-[#111111]">
       {/* Category Header Banner (The Local Project Style) */}
       <section className="w-full border-b-[0.5px] border-neutral-300 py-6 text-center">
         <h2 className="font-suisse text-[10px] uppercase tracking-[0.3em] text-[#111111]">

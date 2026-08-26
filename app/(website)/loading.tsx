@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-    <div className="w-full min-h-[80vh] bg-[#F9F9F8] flex flex-col justify-center items-center px-6 py-24">
+    <div className="w-full min-h-[80vh] bg-[#FFFDF4] flex flex-col justify-center items-center px-6 py-24">
       <div className="flex flex-col items-center space-y-6 animate-pulse max-w-lg text-center">
         <div className="font-suisse text-xs uppercase tracking-[0.3em] text-neutral-400">
           DARI ELAN — EXHIBITION ARCHIVE

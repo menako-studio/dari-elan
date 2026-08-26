@@ -60,12 +60,12 @@ export default function PhotoModal({ photo, onClose, onNext, onPrev }: PhotoModa
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 z-50 overflow-y-auto bg-[#F9F9F8] text-[#111111] selection:bg-neutral-200"
+          className="fixed inset-0 z-50 overflow-y-auto bg-[#FFFDF4] text-[#111111] selection:bg-[#D36F83] selection:text-white"
           onClick={onClose}
         >
-          {/* Sticky Header Bar */}
-          <div 
-            className="sticky top-0 z-20 w-full px-6 md:px-12 py-4 bg-[#F9F9F8]/90 backdrop-blur-md border-b-[0.5px] border-neutral-300 flex justify-between items-center font-suisse text-xs uppercase tracking-[0.2em]"
+          {/* Sticky Modal Navigation Bar */}
+          <header 
+            className="sticky top-0 z-20 w-full px-6 md:px-12 py-4 bg-[#FFFDF4]/90 backdrop-blur-md border-b-[0.5px] border-neutral-300 flex justify-between items-center font-suisse text-xs uppercase tracking-[0.2em]"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center space-x-3 text-neutral-500">
@@ -102,7 +102,7 @@ export default function PhotoModal({ photo, onClose, onNext, onPrev }: PhotoModa
                 ✕ Close
               </button>
             </div>
-          </div>
+          </header>
 
           {/* Modal Inner Content Container */}
           <div 

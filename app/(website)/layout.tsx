@@ -1,17 +1,36 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Inter, EB_Garamond } from "next/font/google";
 import Navigation from "@/components/Navigation";
 import AmbientAudioPlayer from "@/components/AmbientAudioPlayer";
+import BrandLogo from "@/components/BrandLogo";
+import Brandmark from "@/components/Brandmark";
 import { generatePersonJsonLd } from "@/lib/json-ld";
 import "../globals.css";
 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const ebGaramond = EB_Garamond({
+  subsets: ["latin"],
+  variable: "--font-garamond",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "DARIELAN — Elan Budikusumah Photography",
-  description: "Photography as therapy. Translating emotions into light and shadow in Bali, Indonesia.",
+  description: "to be the link between humans and memories. Photography as therapy in Bali, Indonesia.",
   metadataBase: new URL("https://darielan.com"),
+  icons: {
+    icon: "/images/darielan-brandmark-pink.svg",
+    apple: "/images/darielan-brandmark-pink.svg",
+  },
   openGraph: {
     title: "DARIELAN — Elan Budikusumah Photography",
-    description: "Photography as therapy. Translating emotions into light and shadow in Bali, Indonesia.",
+    description: "to be the link between humans and memories. Translating emotions into light and shadow in Bali, Indonesia.",
     url: "https://darielan.com",
     siteName: "DARIELAN",
     images: [
@@ -28,7 +47,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "DARIELAN — Elan Budikusumah Photography",
-    description: "Photography as therapy. Translating emotions into light and shadow in Bali, Indonesia.",
+    description: "to be the link between humans and memories. Translating emotions into light and shadow in Bali, Indonesia.",
     images: ["/api/og?title=SELECTED%20WORKS%20(2012-2026)&category=FINE%20ART%20%26%20COMMERCIAL"],
   },
 };
@@ -41,14 +60,20 @@ export default function RootLayout({
   const personJsonLd = generatePersonJsonLd();
 
   return (
-    <html lang="en" className="bg-[#F9F9F8] text-[#111111] antialiased">
+    <html
+      lang="en"
+      className={`${inter.variable} ${ebGaramond.variable} bg-[#FFFDF4] text-[#111111] antialiased`}
+    >
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
       </head>
-      <body suppressHydrationWarning={true} className="min-h-screen flex flex-col justify-between bg-[#F9F9F8] text-[#111111] font-times selection:bg-neutral-200">
+      <body
+        suppressHydrationWarning={true}
+        className="min-h-screen flex flex-col justify-between bg-[#FFFDF4] text-[#111111] font-times selection:bg-[#D36F83] selection:text-white"
+      >
         {/* Responsive Navigation Header */}
         <Navigation />
 
@@ -58,10 +83,10 @@ export default function RootLayout({
         {/* Global Ambient iPod Player */}
         <AmbientAudioPlayer />
 
-        {/* Global Footer in font-unica ONLY */}
-        <footer className="border-t-[0.5px] border-neutral-300 bg-[#F9F9F8] py-16 md:py-24 font-unica text-[11px] tracking-wider text-neutral-600 uppercase">
+        {/* Global Footer strictly following Brand Typography & Structure */}
+        <footer className="border-t-[0.5px] border-neutral-300/80 bg-[#FFFDF4] py-16 md:py-24 font-unica text-[11px] tracking-wider text-neutral-600 uppercase">
           <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-12 pb-16 border-b-[0.5px] border-neutral-300">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-12 pb-16 border-b-[0.5px] border-neutral-300/80">
               <div>
                 <p className="text-[#111111] font-medium mb-3">Location</p>
                 <p className="leading-relaxed">Ubud & Canggu, Bali</p>
@@ -106,15 +131,26 @@ export default function RootLayout({
               </div>
 
               <div>
-                <p className="text-[#111111] font-medium mb-3">Philosophy</p>
-                <p className="normal-case font-times text-xs text-neutral-500 leading-relaxed italic">
-                  "Photography is not just about framing; it is about learning about life, therapy, and translating emotions into light and shadow."
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-[#111111] font-medium">Philosophy</p>
+                  <Brandmark className="h-5 w-auto text-[#D36F83] opacity-85" />
+                </div>
+                <p className="normal-case font-times text-xs text-neutral-600 leading-relaxed italic">
+                  “to be the link between humans and memories.”
                 </p>
               </div>
             </div>
 
             <div className="pt-8 flex flex-col md:flex-row justify-between items-start md:items-center text-neutral-400 gap-4">
-              <p>© {new Date().getFullYear()} DARIELAN — ELAN BUDIKUSUMAH. ALL RIGHTS RESERVED.</p>
+              <div className="flex items-center space-x-3">
+                <BrandLogo className="h-5 w-auto text-neutral-500 hover:text-[#111111] transition-colors" />
+                <span className="text-neutral-300">/</span>
+                <p>© {new Date().getFullYear()} DARIELAN — ELAN BUDIKUSUMAH. ALL RIGHTS RESERVED.</p>
+              </div>
+              <div className="flex items-center space-x-2 text-[10px] tracking-widest text-neutral-400">
+                <span className="w-2 h-2 rounded-full bg-[#D36F83]/60 inline-block"></span>
+                <span>NOSTALGIA PINK & WARM IVORY</span>
+              </div>
             </div>
           </div>
         </footer>
@@ -122,4 +158,3 @@ export default function RootLayout({
     </html>
   );
 }
-

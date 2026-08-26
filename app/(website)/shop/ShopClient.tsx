@@ -36,7 +36,7 @@ export default function ShopClient({ products }: { products: Product[] }) {
   const featuredProduct = products.length > 0 ? products[0] : null;
 
   return (
-    <div className="w-full bg-[#F9F9F8] relative min-h-screen text-[#111111]">
+    <div className="w-full bg-[#FFFDF4] relative min-h-screen text-[#111111]">
       <section className="w-full border-b-[0.5px] border-neutral-300 py-6 text-center">
         <h2 className="font-suisse text-[10px] uppercase tracking-[0.3em] text-[#111111]">
           EDITION PRINTS & DIGITAL TOOLS
@@ -217,7 +217,7 @@ export default function ShopClient({ products }: { products: Product[] }) {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 z-50 w-full max-w-md h-full bg-[#F9F9F8] border-l-[0.5px] border-neutral-300 flex flex-col justify-between p-6 md:p-8"
+              className="fixed top-0 right-0 z-50 w-full max-w-md h-full bg-[#FFFDF4] border-l-[0.5px] border-neutral-300 flex flex-col justify-between p-6 md:p-8"
             >
               <div>
                 <div className="flex justify-between items-center pb-6 border-b-[0.5px] border-neutral-300 font-suisse text-xs uppercase tracking-[0.2em]">

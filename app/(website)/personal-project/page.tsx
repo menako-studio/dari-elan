@@ -17,7 +17,7 @@ export default async function PersonalProjectPage() {
   const displayProjects = projects && projects.length > 0 ? projects : MOCK_PERSONAL_PROJECTS;
 
   return (
-    <Suspense fallback={<div className="w-full min-h-screen bg-[#F9F9F8]" />}>
+    <Suspense fallback={<div className="w-full min-h-screen bg-[#FFFDF4]" />}>
       <PersonalProjectClient projects={displayProjects} />
     </Suspense>
   );

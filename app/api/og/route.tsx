@@ -21,7 +21,7 @@ export async function GET(request: Request) {
             flexDirection: "column",
             alignItems: "flex-start",
             justifyContent: "space-between",
-            backgroundColor: "#F9F9F8",
+            backgroundColor: "#FFFDF4",
             padding: "80px 100px",
             fontFamily: "sans-serif",
             color: "#111111",

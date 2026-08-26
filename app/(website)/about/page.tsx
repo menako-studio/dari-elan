@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Brandmark from "@/components/Brandmark";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 24 },
@@ -12,7 +13,7 @@ const fadeInUp = {
 
 export default function AboutPage() {
   return (
-    <div className="w-full bg-[#F9F9F8]">
+    <div className="w-full bg-[#FFFDF4]">
       {/* Category Header */}
       <motion.section
         {...fadeInUp}
@@ -51,13 +52,14 @@ export default function AboutPage() {
       <section className="max-w-[1400px] mx-auto px-6 md:px-12 py-24 md:py-36 border-b-[0.5px] border-neutral-300">
         <motion.div
           {...fadeInUp}
-          className="max-w-4xl mx-auto text-center"
+          className="max-w-4xl mx-auto text-center flex flex-col items-center"
         >
-          <span className="font-suisse text-[10px] uppercase tracking-[0.3em] text-neutral-400 block mb-8">
+          <Brandmark className="h-10 w-auto text-[#D36F83] mb-6 opacity-90" />
+          <span className="font-suisse text-[10px] uppercase tracking-[0.3em] text-neutral-400 block mb-6">
             THE MANIFESTO
           </span>
           <p className="font-times text-2xl md:text-4xl leading-relaxed text-[#111111] font-normal mb-8">
-            "Photography is not just about framing; it is about learning about life, therapy, and translating emotions into light and shadow."
+            “to be the link between humans and memories.”
           </p>
           <p className="font-times text-neutral-600 text-base md:text-lg leading-relaxed max-w-2xl mx-auto font-normal">
             Hi, I’m Elan Budikusumah. A Bali-based photographer dedicated to quiet observation. Most days, you’ll find me documenting human gestures, architecture, and light across Indonesia.

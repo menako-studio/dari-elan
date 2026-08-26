@@ -40,7 +40,7 @@ export default function CommercialClient({ projects }: { projects: CommercialPro
   const otherProjects = projects.slice(2);
 
   return (
-    <div className="w-full bg-[#F9F9F8] min-h-screen text-[#111111]">
+    <div className="w-full bg-[#FFFDF4] min-h-screen text-[#111111]">
       <section className="w-full border-b-[0.5px] border-neutral-300 py-6 text-center">
         <h2 className="font-suisse text-[10px] uppercase tracking-[0.3em] text-[#111111]">
           COMMERCIAL & ASSIGNED WORKS (2024–2026)
@@ -201,18 +201,20 @@ export default function CommercialClient({ projects }: { projects: CommercialPro
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 bg-[#F9F9F8]/95 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 bg-[#FFFDF4]/95 backdrop-blur-md"
             onClick={() => setSelectedProject(null)}
           >
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              className="relative w-full md:w-[95vw] md:h-[95vh] bg-[#F9F9F8] border-[0.5px] border-neutral-300 p-4 md:p-6 flex flex-col max-h-[100vh] overflow-y-auto md:overflow-hidden"
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="relative w-full md:w-[95vw] md:h-[95vh] bg-[#FFFDF4] border-[0.5px] border-neutral-300 p-4 md:p-6 flex flex-col max-h-[100vh] overflow-y-auto md:overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center pb-3 mb-4 border-b-[0.5px] border-neutral-300 font-suisse text-xs uppercase tracking-[0.2em] shrink-0">
-                <span className="text-neutral-500">{selectedProject.projectType}</span>
+                <span className="text-[#111111] font-medium truncate max-w-[70vw]">
+                  {selectedProject.title} ({selectedProject.date ? new Date(selectedProject.date).getFullYear() : "2024"})
+                </span>
                 <button
                   onClick={() => setSelectedProject(null)}
                   className="px-3 py-1 border-[0.5px] border-neutral-300 hover:bg-[#111111] hover:text-white transition-colors"
