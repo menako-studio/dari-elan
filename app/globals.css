@@ -2,20 +2,38 @@
 
 @layer base {
   :root {
-    --font-poynter: "Poynter Oldstyle Text", Georgia, serif;
-    --font-suisse: "Suisse Int'l", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    --font-times: "Times New Roman", Times, "Baskerville", serif;
+    /* Brand Color Palette (BIM Brand Guideline) */
+    --brand-bg: #FFFDF4;
+    --brand-pink: #D36F83;
+    --brand-pink-light: #F191A9;
+    --brand-pink-soft: #FFB2C4;
+    --brand-card: #E5DED4;
+    --brand-ink: #111111;
+    --brand-muted: #606060;
+    --brand-border: #E8E2D9;
+
+    /* Brand Typography Standard */
+    --font-inter: var(--font-inter, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+    --font-garamond: var(--font-garamond, "Garamond Premiere Pro", "EB Garamond", Garamond, Georgia, serif);
+    --font-suisse: var(--font-inter, Inter, sans-serif);
+    --font-times: var(--font-garamond, "EB Garamond", serif);
     --font-unica: "LL Unica 77", "Courier New", monospace;
+    --font-poynter: var(--font-garamond, "EB Garamond", serif);
   }
 
   body {
-    background-color: #F9F9F8;
-    color: #111111;
-    font-family: var(--font-times);
+    background-color: var(--brand-bg);
+    color: var(--brand-ink);
+    font-family: var(--font-garamond);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin: 0;
     padding: 0;
+  }
+
+  ::selection {
+    background-color: #D36F83;
+    color: #FFFFFF;
   }
 
   *:not(#ambient-audio-player, #ambient-audio-player *) {
@@ -23,18 +41,26 @@
   }
 }
 
-.font-poynter {
-  font-family: var(--font-poynter);
+.font-inter {
+  font-family: var(--font-inter);
+}
+
+.font-garamond {
+  font-family: var(--font-garamond);
 }
 
 .font-suisse {
-  font-family: var(--font-suisse);
+  font-family: var(--font-inter);
 }
 
 .font-times {
-  font-family: var(--font-times);
+  font-family: var(--font-garamond);
 }
 
 .font-unica {
   font-family: var(--font-unica);
+}
+
+.font-poynter {
+  font-family: var(--font-garamond);
 }
